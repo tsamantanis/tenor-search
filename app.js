@@ -7,25 +7,35 @@ const app = express();
 // Middleware
 const exphbs  = require('express-handlebars');
 
+const Tenor = require("tenorjs").client({
+  // Replace with your own key
+    "Key": "AJA1GYKPJ11V", // https://tenor.com/developer/keyregistration
+    "Filter": "high", // "off", "low", "medium", "high", not case sensitive
+    "Locale": "en_US", // Your locale here, case-sensitivity depends on input
+});
+
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 // Routes
 app.get('/', (req, res) => {
-    console.log(req.query) // => "{ term: hey" }
-    res.render('home')
+    term = ""
+    if (req.query.term) {
+        term = req.query.term
+    }
+    Tenor.Search.Query(term, "10").then(response => {
+        const gifs = response;
+        res.render('home', { gifs })
+    }).catch(console.error);
 })
+
 app.get('/', (req, res) => {
-    // set the url of the gif
     const gifUrl = 'https://media1.tenor.com/images/561c988433b8d71d378c9ccb4b719b6c/tenor.gif?itemid=10058245'
-    // render the hello-gif view, passing the gifUrl into the view to be displayed
     res.render('hello-gif', { gifUrl })
 })
 
 app.get('/greetings/:name', (req, res) => {
-    // grab the name from the path provided
     const name = req.params.name;
-    // render the greetings view, passing along the name
     res.render('greetings', { name });
 })
 // Start Server
