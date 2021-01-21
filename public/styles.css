@@ -1,0 +1,62 @@
+html {
+    background: #191919;
+}
+
+h1, h2, h3 {
+    color: #F8F8F8;
+    margin-bottom: 4rem;
+}
+
+.gif-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.gif-container .column {
+    width: 32% !important;
+    height: 600px;
+    margin: 0.5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.gif-container .column:nth-child(3n) {
+    border-right: 1px solid #535353;
+    border-left: 1px solid #535353;
+
+}
+
+.tenor-gif-embed {
+    width: 75%;
+    /* padding: 2rem; */
+}
+
+form {
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+
+form input {
+    height: 50px;
+    width: 600px !important;
+    border: 2px solid #F8F8F8 !important;
+    outline: none;
+    background: transparent !important;
+    color: #F8F8F8;
+    padding-left: 1rem;
+}
+
+form button {
+    height: 50px;
+    width: 100px !important;
+    margin: 0;
+}

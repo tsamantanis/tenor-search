@@ -1,12 +1,14 @@
 // Require Libraries
 const express = require('express');
+const http = require('http');
+require('dotenv').config();
 
 // App Setup
 const app = express();
+app.use(express.static('public'));
 
 // Middleware
 const exphbs  = require('express-handlebars');
-require('dotenv').config();
 
 const Tenor = require("tenorjs").client({
   // Replace with your own key
@@ -15,7 +17,6 @@ const Tenor = require("tenorjs").client({
     "Locale": "en_US", // Your locale here, case-sensitivity depends on input
 });
 
-const http = require('http');
 const TenorKey = process.env.API_KEY;
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
