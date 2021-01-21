@@ -14,6 +14,9 @@ const Tenor = require("tenorjs").client({
     "Locale": "en_US", // Your locale here, case-sensitivity depends on input
 });
 
+const http = require('http');
+const TenorKey = "AJA1GYKPJ11V"
+
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
@@ -23,10 +26,21 @@ app.get('/', (req, res) => {
     if (req.query.term) {
         term = req.query.term
     }
-    Tenor.Search.Query(term, "10").then(response => {
-        const gifs = response;
-        res.render('home', { gifs })
-    }).catch(console.error);
+    const limit = 10;
+    const options = new URL(`http://api.tenor.com/v1/search?q=${term}&key=${TenorKey}&limit=${limit}`);
+    let tenorRequest = http.get(options, result => {
+        body = '';
+        result.on('data', chunk => {
+            body += chunk
+        });
+        result.on('end', () => {
+            console.log(body);
+            const gifs = JSON.parse(body).results
+            console.log(gifs);
+            res.render('home', { gifs });
+        });
+    });
+    tenorRequest.on("error", console.error);
 })
 
 app.get('/', (req, res) => {
