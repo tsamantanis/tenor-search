@@ -6,16 +6,17 @@ const app = express();
 
 // Middleware
 const exphbs  = require('express-handlebars');
+require('dotenv').config();
 
 const Tenor = require("tenorjs").client({
   // Replace with your own key
-    "Key": "AJA1GYKPJ11V", // https://tenor.com/developer/keyregistration
+    "Key": process.env.API_KEY, // https://tenor.com/developer/keyregistration
     "Filter": "high", // "off", "low", "medium", "high", not case sensitive
     "Locale": "en_US", // Your locale here, case-sensitivity depends on input
 });
 
 const http = require('http');
-const TenorKey = "AJA1GYKPJ11V"
+const TenorKey = process.env.API_KEY;
 
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
