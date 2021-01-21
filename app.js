@@ -34,9 +34,7 @@ app.get('/', (req, res) => {
             body += chunk
         });
         result.on('end', () => {
-            console.log(body);
             const gifs = JSON.parse(body).results
-            console.log(gifs);
             res.render('home', { gifs });
         });
     });
